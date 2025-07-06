@@ -1,7 +1,116 @@
 body {
-  margin: 0;
-  overflow: hidden;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: sans-serif;
+    perspective: 1000px; /* Add perspective to the body for a 3D effect */
 }
-canvas {
-  display: block;
+
+.scene {
+    width: 200px;
+    height: 300px; /* Adjust height for the machine shape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popcorn-machine {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-10deg) rotateY(0deg); /* Initial rotation */
+    cursor: grab;
+}
+
+.popcorn-machine.grabbing {
+    cursor: grabbing;
+}
+
+.face {
+    position: absolute;
+    width: 200px; /* Match the scene width */
+    height: 300px; /* Match the scene height */
+    background-color: rgba(255, 255, 255, 0.9); /* White base for the machine */
+    border: 5px solid #a00; /* Red border for a classic look */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px; /* Size for the popcorn emoji */
+    color: #ffd700; /* Gold color for the popcorn emoji */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+		user-select: none; /* Prevent text selection */
+		-webkit-user-select: none; /* Safari */
+		-moz-user-select: none; /* Firefox */
+		-ms-user-select: none; /* IE10+ */
+}
+
+/* Positioning and transforming each face */
+.front {
+    transform: translateZ(100px); /* Half of the depth */
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 5px solid #a00;
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(100px);
+    background-color: rgba(200, 200, 200, 0.8); /* Slightly darker back */
+    border: 5px solid #a00;
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(100px);
+    background-color: rgba(230, 230, 230, 0.85);
+    border: 5px solid #a00;
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(100px);
+    background-color: rgba(230, 230, 230, 0.85);
+    border: 5px solid #a00;
+}
+
+.top {
+    width: 200px;
+    height: 200px; /* Make top and bottom square for a cube */
+    transform: rotateX(90deg) translateZ(100px); /* Adjust Z for height */
+    background-color: #a00; /* Red top */
+    border: none; /* No border on top */
+    border-bottom: 5px solid #800; /* Darker red line for separation */
+    font-size: 0; /* Hide content on top */
+}
+
+.bottom {
+    width: 200px;
+    height: 200px; /* Make top and bottom square for a cube */
+    transform: rotateX(-90deg) translateZ(200px); /* Adjust Z for height */
+    background-color: #880000; /* Darker red bottom */
+    border: none; /* No border on bottom */
+    border-top: 5px solid #600; /* Darker red line for separation */
+    font-size: 0; /* Hide content on bottom */
+}
+
+/* Optional: Add some details to the front face */
+.front::before {
+    content: "POPCORN";
+    position: absolute;
+    top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #a00; /* Red text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.front::after {
+    content: "FRESH & HOT!";
+    position: absolute;
+    bottom: 20px;
+    font-size: 18px;
+    color: #444;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }

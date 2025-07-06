@@ -1,32 +1,32 @@
-import * as THREE from 'https://unpkg.com/three@0.160.1/build/three.module.js';
-import { GLTFLoader } from 'https://unpkg.com/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
+const machine = document.getElementById('machine');
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+let isDragging = false;
+let lastX = 0;
+let lastY = 0;
+let rotationX = -10;
+let rotationY = 0;
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// Lighting
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(1, 1, 1);
-scene.add(light);
-
-// Load GLB model
-const loader = new GLTFLoader();
-loader.load('./models/Popcorn Cart.glb', (gltf) => {
-  const model = gltf.scene;
-  scene.add(model);
-  model.position.set(0, 0, 0);
-}, undefined, (error) => {
-  console.error('An error happened loading the model:', error);
+document.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
 });
 
-camera.position.z = 5;
+document.addEventListener('mouseup', () => {
+  isDragging = false;
+});
 
-function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
-}
-animate();
+document.addEventListener('mousemove', (e) => {
+  if (!isDragging) return;
+
+  const deltaX = e.clientX - lastX;
+  const deltaY = e.clientY - lastY;
+
+  rotationY += deltaX * 0.5;
+  rotationX -= deltaY * 0.5;
+
+  machine.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
