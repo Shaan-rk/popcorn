@@ -10,7 +10,7 @@
       const geometry = new THREE.BoxGeometry();
       const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
       const cube = new THREE.Mesh(geometry, material);
-      scene.add(cube);
+      scene.add(cuboid);
 
       const light = new THREE.DirectionalLight(0xffffff, 1);
       light.position.set(5, 5, 5);
