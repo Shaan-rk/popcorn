@@ -9,14 +9,27 @@
 <body>
   <div class="scene">
     <div class="popcorn-machine" id="machine">
+      <div class="popcorn-inside">
+        <div class="popcorn-face popcorn-front"></div>
+        <div class="popcorn-face popcorn-back"></div>
+        <div class="popcorn-face popcorn-left"></div>
+        <div class="popcorn-face popcorn-right"></div>
+        <div class="popcorn-face popcorn-top"></div>
+      </div>
+
       <div class="face front">🍿</div>
       <div class="face back"></div>
       <div class="face left"></div>
-      <div class="face right"></div>
+      <div class="face right">
+        <div class="hatch-wrapper">
+          <div class="hatch">
+          </div>
+        </div>
+      </div>
       <div class="face top"></div>
       <div class="face bottom"></div>
     </div>
   </div>
-  <script src="main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
