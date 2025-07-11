@@ -17,6 +17,6 @@ export const popcornMessages = [
   },
   {
     header: "If we got a pet, what would I pick for us?",
-    body: "Yeah now that you know you're a cat, it's ggs for Flamethrower, so it gotta be Coco hehe."
+    body: "Yeah now that you know you're a cat, it's ggs for Flamethrower, so it gotta be Maple hehe."
   }
 ];
