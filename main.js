@@ -1,3 +1,5 @@
+import { popcornMessages } from "./messages.js";
+
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 let targetRotation = { x: -0.25, y: -0.5 };
@@ -32,6 +34,34 @@ document.addEventListener("mousemove", (e) => {
   previousMousePosition = { x: e.clientX, y: e.clientY };
 });
 
+machine.addEventListener("touchstart", (e) => {
+  isDragging = true;
+  const touch = e.touches[0];
+  previousMousePosition = { x: touch.clientX, y: touch.clientY };
+  machine.classList.add("grabbing");
+});
+
+document.addEventListener("touchend", () => {
+  isDragging = false;
+  machine.classList.remove("grabbing");
+});
+
+document.addEventListener("touchmove", (e) => {
+  if (!isDragging) return;
+
+  const touch = e.touches[0];
+  const deltaX = touch.clientX - previousMousePosition.x;
+  const deltaY = touch.clientY - previousMousePosition.y;
+
+  targetRotation.y += deltaX * 0.005;
+  targetRotation.x -= deltaY * 0.005;
+
+  velocity.y = deltaX * 0.005;
+  velocity.x = -deltaY * 0.005;
+
+  previousMousePosition = { x: touch.clientX, y: touch.clientY };
+});
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -55,9 +85,61 @@ function animate() {
 const hatch = document.querySelector('.hatch');
 
 if (hatch) {
-    hatch.addEventListener('click', () => {
-        hatch.classList.toggle('hatch-open');
+  hatch.addEventListener("click", () => {
+    hatch.classList.add('hatch-open');
+
+    const popcorn = document.createElement("div");
+    popcorn.classList.add("irregular-popcorn");
+
+    const faces = ["irreg-front", "irreg-back", "irreg-left", "irreg-right", "irreg-top", "irreg-bottom"];
+    faces.forEach((face) => {
+      const faceDiv = document.createElement("div");
+      faceDiv.classList.add("irregular-face", face);
+      popcorn.appendChild(faceDiv);
     });
+
+    // Add to DOM first, at origin
+    poppedContainer.appendChild(popcorn);
+
+    // Force a reflow so that transition will trigger
+    popcorn.getBoundingClientRect();
+
+    // Now apply final random transform
+    const offsetX = Math.random() * 150 - 75;
+    const offsetY = Math.random() * 60 + 60;
+    const rotX = 360 + Math.floor(Math.random() * 360);
+    const rotY = 360 + Math.floor(Math.random() * 360);
+
+    popcorn.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 40px) scale(1.1) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+
+    // Auto-close hatch
+    setTimeout(() => {
+      hatch.classList.remove('hatch-open');
+    }, 300);
+
+    // Popcorn click to open modal
+    popcorn.addEventListener("click", () => {
+      const selected = popcornMessages[Math.floor(Math.random() * popcornMessages.length)];
+      modal.querySelector(".message-header").textContent = selected.header;
+      modal.querySelector(".message-body").textContent = selected.body;
+      modal.classList.remove("hidden");
+      popcorn.remove();
+    });
+  });
 }
+
+const poppedContainer = document.getElementById("popped-container");
+const modal = document.getElementById("popcorn-modal");
+const closeBtn = modal.querySelector(".close-btn");
+
+closeBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.classList.add("hidden");
+  }
+});
 
 animate();
