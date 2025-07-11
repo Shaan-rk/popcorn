@@ -13,10 +13,10 @@ export const popcornMessages = [
   },
   {
     header: "If you got famous out of nowhere, what do you think it'd be for?",
-    body: "Omg, for sure it has to do something with you posting something silly about Snuffles or yourself — like that deer TikTok that your dad saw hehe. You really do got the viral potential fr."
+    body: "Omg, for sure it has to do something with you posting something silly about Snuffles or yourself, like that deer TikTok that your dad saw hehe. You really do got the viral potential fr."
   },
   {
     header: "If we got a pet, what would I pick for us?",
-    body: "Yeah now that you know you're a cat, it's ggs for Flamethrower — so it gotta be Coco hehe."
+    body: "Yeah now that you know you're a cat, it's ggs for Flamethrower, so it gotta be Coco hehe."
   }
 ];
